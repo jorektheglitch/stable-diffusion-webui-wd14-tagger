@@ -229,6 +229,10 @@ class WaifuDiffusionInterrogator(Interrogator):
         self.kwargs = kwargs
 
     def download(self) -> Tuple[os.PathLike, os.PathLike]:
+        #if model_path exists, skip download
+        print(self.model_path, self.tags_path)
+        if os.path.exists(self.model_path) and os.path.exists(self.tags_path):
+            return self.model_path, self.tags_path
         print(f"Loading {self.name} model file from {self.kwargs['repo_id']}")
 
         model_path = Path(hf_hub_download(
